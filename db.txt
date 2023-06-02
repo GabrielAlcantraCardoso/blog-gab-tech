@@ -1,0 +1,85 @@
+Login
+- id
+- profile_picture
+- name
+- email
+- password
+- about
+- instagram _link
+- facebook_link
+- linkedin_link
+
+Post
+- id 
+- title
+- text
+- date
+- autor
+- tumb_img
+- text_img
+
+Categories
+- id
+- name
+
+Post_Categories
+- id_post
+- id_ Categories
+
+
+CREATE TABLE ufmt.user (
+  id SERIAL,
+  name VARCHAR(100),
+  username VARCHAR(100),
+  email VARCHAR(100),
+  password VARCHAR(100),
+  profile_picture TEXT,
+  about TEXT,
+  instagram_link VARCHAR(100),
+  facebook_link VARCHAR(100),
+  linkedin_link VARCHAR(100),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE ufmt.post (
+  id SERIAL,
+  title VARCHAR(100),
+  text TEXT,
+  date DATE,
+  id_user INT,
+  thumb_img TEXT,
+  text_img TEXT,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_post_user
+    FOREIGN KEY (id_user)
+      REFERENCES ufmt.user(id)
+);
+
+CREATE TABLE ufmt.categories (
+  id SERIAL,
+  name VARCHAR(100),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE ufmt.post_categories (
+  id SERIAL,
+  id_post INT,
+  id_categories INT,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_post_categories_post
+    FOREIGN KEY (id_post)
+      REFERENCES ufmt.post(id),
+  CONSTRAINT FK_post_categories_categories
+    FOREIGN KEY (id_categories)
+      REFERENCES ufmt.categories(id)
+);
+
+CREATE TABLE ufmt.home_info (
+  id SERIAL,
+  id_user INT,
+  hidden BOOLEAN,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_home_info_user
+    FOREIGN KEY (id_user)
+      REFERENCES ufmt.user(id)
+);
